@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -r esm app.js"
+    "start": "nodemon -r esm app.js",
+    "test": "mocha --require @babel/register tests/*.js --exit"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -19,6 +20,14 @@
     "mysql": "^2.17.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.15",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/register": "^7.13.14",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.3.2",
     "nodemon": "^2.0.2"
   }
 }
