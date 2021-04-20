@@ -1,8 +1,9 @@
 import chai from "chai";
 import { expect } from "chai";
 import chaiHttp from "chai-http";
-import app from "../app";
+import { app, serve } from "../app";
 import { getData } from "../controllers/indexController";
+import { deleteItem } from "../controllers/deleteController";
 chai.use(chaiHttp);
 chai.should();
 describe("Get 404", () => {
@@ -35,11 +36,36 @@ describe("Http Index", () => {
     });
   });
 });
-
-it("Debe recibirse un array con los ToDos", (done) => {
-  getData().then((data) => {
-    expect(data).not.to.be.empty;
-
+describe("Http Index", () => {
+  after((done) => {
+    serve.close();
     done();
+  });
+  describe("control de los datos del array", () => {
+    let lastId;
+    beforeEach((done) => {
+      chai
+        .request(app)
+        .post("/new")
+        .send({
+          subject: "Registo para test",
+          description: "Esta es la descripción",
+        })
+        .end((err, res) => {
+          done();
+        });
+    });
+    afterEach((done) => {
+      deleteItem(lastId).then(() => {
+        done();
+      });
+    });
+    it("Debe recibirse un array con los ToDos", (done) => {
+      getData().then((data) => {
+        expect(data).not.to.be.empty;
+        lastId = data[data.length - 1].id;
+        done();
+      });
+    });
   });
 });

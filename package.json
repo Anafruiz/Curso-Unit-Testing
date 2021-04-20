@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon -r esm app.js",
-    "test": "mocha --require @babel/register tests/*.js --exit"
+    "test": "mocha --require @babel/register tests/*.js --watch"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
